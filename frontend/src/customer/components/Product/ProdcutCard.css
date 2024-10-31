@@ -1,0 +1,25 @@
+.prodcutCard .textPart{
+    transition: transform .3s ease-out;
+}
+
+.prodcutCard:hover .textPart{
+    transform: translateY(-1rem);
+}
+
+.prodcutCard:hover{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;
+}
+
+.radio-button-left {
+    margin-left: 0;
+}
+.form-label-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 0; /* Adjust if needed */
+}
+
+.MuiRadio-root {
+    padding-left: 0; /* Remove extra padding on the Radio button */
+}
