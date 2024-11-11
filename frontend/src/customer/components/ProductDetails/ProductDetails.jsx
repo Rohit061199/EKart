@@ -5,6 +5,9 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
+import { mens_kurta } from "../../../Data/mens_kurta";
+import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
+import { useNavigate } from "react-router-dom";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -56,6 +59,8 @@ const product = {
 };
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
+
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -63,6 +68,12 @@ function classNames(...classes) {
 export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+
+  const navigate=useNavigate();
+
+const handleAddToKart=()=>{
+    navigate("/cart")
+}
 
   return (
     <div className="bg-white lg:px-20">
@@ -230,6 +241,8 @@ export default function ProductDetails() {
                     bgcolor: "#9155fd",
                     mt: "1rem",
                   }}
+
+                  onClick={handleAddToKart}
                 >
                   Add To Kart
                 </Button>
@@ -436,7 +449,11 @@ export default function ProductDetails() {
 
         {/*Similar Products*/}
         <section className="pt-10">
-          <h1>Similar Products</h1>
+          <h1 className="py-5 text-xl font-bold">Similar Products</h1>
+
+          <div className="flex flex-wrap space-y-5">
+            {mens_kurta.map((item)=><HomeSectionCard product={item}/>)}
+          </div>
           
         </section>
       </div>
