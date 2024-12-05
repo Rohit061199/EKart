@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ekart.Exception.UserException;
 import com.ekart.config.JwtProvider;
+import com.ekart.model.Cart;
 import com.ekart.model.User;
 import com.ekart.repository.UserRepository;
 import com.ekart.requests.LoginRequest;
 import com.ekart.response.AuthResponse;
+import com.ekart.service.CartService;
 import com.ekart.service.CustomUserServiceImpl;
 
 @RestController
@@ -33,6 +35,8 @@ public class AuthController {
 	
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private CartService cartService;
 	
 	private CustomUserServiceImpl customUserServiceImpl;
 	
@@ -66,6 +70,8 @@ public class AuthController {
 		createdUser.setLastName(lastName);
 		
 		User savedUser=userRepository.save(createdUser);
+		
+		Cart cart=cartService.createCart(savedUser);
 		
 		Authentication authentication=new UsernamePasswordAuthenticationToken(savedUser.getEmail(), savedUser.getPassword());
 		

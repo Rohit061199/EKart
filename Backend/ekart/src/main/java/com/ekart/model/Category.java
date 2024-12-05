@@ -24,7 +24,7 @@ public class Category {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="parent_category_id")
-	private Category category;
+	private Category parentCategory;
 	
 	
 	private int level;
@@ -49,12 +49,14 @@ public class Category {
 		this.name = name;
 	}
 
-	public Category getCategory() {
-		return category;
+	
+
+	public Category getParentCategory() {
+		return parentCategory;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setParentCategory(Category parentCategory) {
+		this.parentCategory = parentCategory;
 	}
 
 	public int getLevel() {
@@ -65,11 +67,11 @@ public class Category {
 		this.level = level;
 	}
 
-	public Category(Long id, @NotNull @Size(max = 50) String name, Category category, int level) {
+	public Category(Long id, @NotNull @Size(max = 50) String name, Category parentCategory, int level) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.category = category;
+		this.parentCategory = parentCategory;
 		this.level = level;
 	}
 	

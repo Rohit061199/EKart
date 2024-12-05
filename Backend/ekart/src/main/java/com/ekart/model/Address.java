@@ -36,7 +36,7 @@ public class Address {
 	private String zipCode;
 	
 	@ManyToOne
-	@JoinColumn(name="user-Id")
+	@JoinColumn(name="user_id")
 	@JsonIgnore
 	private User user;
 	
