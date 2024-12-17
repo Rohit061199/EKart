@@ -8,7 +8,8 @@ More features such as Payment Gateway and OAuth login are incoming.
 | Features | Implementation Status |
 | --- | --- |
 | Front-end with React | Completed |
-| Backend based On java | Almost done. Left with some Controller classes |
+| Backend based On java | Done |
+| Backend API Testing with Postman | Done |
 | Integrating Front and Back ends | Coming up soon |
 | Razorpay Payment Gateway | Coming up Soon |
 
