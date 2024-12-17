@@ -23,7 +23,7 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id;
+	private Long id;
 	
 	@Column(name="title")
 	private String title;
@@ -74,7 +74,7 @@ public class Product {
 		
 	}
 
-	public Product(String id, String title, String description, int price, int discountedPrice, int discountPercent,
+	public Product(Long id, String title, String description, int price, int discountedPrice, int discountPercent,
 			int quantity, String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings,
 			List<Review> reviews, int numRatings, Category category, LocalDateTime createdAt) {
 		super();
@@ -96,11 +96,11 @@ public class Product {
 		this.createdAt = createdAt;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

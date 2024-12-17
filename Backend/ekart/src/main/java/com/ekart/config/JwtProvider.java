@@ -31,7 +31,7 @@ public class JwtProvider {
 		jwt=jwt.substring(7);
 		
 		SecretKey key=Keys.hmacShaKeyFor(JwtConstants.SECRET_KEY.getBytes());
-		Claims claims=Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(jwt).getBody(); //get this from JwtProvider.java
+		Claims claims=Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody(); //get this from JwtProvider.java
 		
 		String email=String.valueOf(claims.get("email"));
 		
