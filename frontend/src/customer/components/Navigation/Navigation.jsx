@@ -9,13 +9,16 @@ import {
 
 import { navigationData as navigation } from "./navigation";
 
-
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 
 import { deepPurple } from "@mui/material/colors";
 
 import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import AuthModel from "../../auth/AuthModel";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, logout } from "../../../State/Auth/Action";
+import { store } from "../../../State/store";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -28,7 +31,11 @@ export default function Navigation() {
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
 
-  const navigate=useNavigate();
+  const location = useLocation();
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -38,6 +45,7 @@ export default function Navigation() {
   };
 
   const handleOpen = () => {
+    navigate("/register")
     setOpenAuthModal(true);
   };
   const handleClose = () => {
@@ -48,6 +56,37 @@ export default function Navigation() {
     navigate(`/${category.id}/${section.id}/${item.id}`);
     close();
   };
+
+  const auth = useSelector((store) => store.auth);
+
+  //console.log(auth.user);
+
+  /*const storeData= useSelector((store) =>{
+    console.log(store);
+    return store;
+  })*/
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+    }
+  }, [jwt, auth.jwt]);
+
+  useEffect(() => {
+    //console.log(auth.user);
+    if (auth.user) {
+      //console.log("Executing this")
+      handleClose();
+    }
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      navigate("/");
+    }
+  }, [auth.user]);
+
+  const handleLogout=()=>{
+    dispatch(logout())
+    handleCloseUserMenu()
+  }
 
   return (
     <div className="bg-white pb-10">
@@ -235,14 +274,12 @@ export default function Navigation() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    src="data:image/png;base64,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"
-                    alt="E-Kart Online Shopping"
-                    className="h-8 w-8 mr-2"
-                  />
-                
+                <span className="sr-only">Your Company</span>
+                <img
+                  src="data:image/png;base64,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"
+                  alt="E-Kart Online Shopping"
+                  className="h-8 w-8 mr-2"
+                />
               </div>
 
               {/* Flyout menus */}
@@ -379,7 +416,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {true ? (
+                  {auth.user?.firstName ? (
                     <div>
                       <Avatar
                         className="text-white"
@@ -394,7 +431,7 @@ export default function Navigation() {
                           cursor: "pointer",
                         }}
                       >
-                        R
+                        {auth.user?.firstName[0].toUpperCase()}
                       </Avatar>
                       {/* <Button
                         id="basic-button"
@@ -414,10 +451,10 @@ export default function Navigation() {
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={()=> navigate("/account/order")}>
+                        <MenuItem onClick={() => navigate("/account/order")}>
                           My Orders
                         </MenuItem>
-                        <MenuItem >Logout</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </Menu>
                     </div>
                   ) : (
@@ -432,10 +469,9 @@ export default function Navigation() {
 
                 {/* Search */}
                 <div className="flex items-center lg:ml-6">
-                
-                  <p  className="p-2 text-gray-400 hover:text-gray-500">
+                  <p className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
-                    
+
                     <MagnifyingGlassIcon
                       className="h-6 w-6"
                       aria-hidden="true"
@@ -445,10 +481,7 @@ export default function Navigation() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Button
-                    
-                    className="group -m-2 flex items-center p-2"
-                  >
+                  <Button className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
@@ -464,7 +497,8 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
-      
+
+      <AuthModel handleClose={handleClose} open={openAuthModal} />
     </div>
   );
 }
