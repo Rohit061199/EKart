@@ -10,7 +10,7 @@ More features such as Payment Gateway and OAuth login are incoming.
 | Front-end with React | Completed |
 | Backend based On java | Done |
 | Backend API Testing with Postman | Done |
-| Integrating Front and Back ends | Coming up soon |
+| Integrating Front and Back ends | Done |
 | Razorpay Payment Gateway | Coming up Soon |
 
 Implemented Carousel's with Alice Carousel from Tailwind.
